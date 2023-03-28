@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ventas));
             this.button3 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -39,7 +40,11 @@
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.lblfact = new System.Windows.Forms.Label();
             this.lblultima = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Ventas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -84,12 +89,15 @@
             // 
             // dgv_Ventas
             // 
+            this.dgv_Ventas.AllowUserToAddRows = false;
+            this.dgv_Ventas.AllowUserToDeleteRows = false;
             this.dgv_Ventas.AllowUserToResizeColumns = false;
             this.dgv_Ventas.AllowUserToResizeRows = false;
             this.dgv_Ventas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_Ventas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Ventas.Location = new System.Drawing.Point(53, 153);
             this.dgv_Ventas.Name = "dgv_Ventas";
+            this.dgv_Ventas.ReadOnly = true;
             this.dgv_Ventas.Size = new System.Drawing.Size(970, 292);
             this.dgv_Ventas.TabIndex = 16;
             this.dgv_Ventas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Ventas_CellClick);
@@ -101,6 +109,7 @@
             this.txtBusquedaV.Name = "txtBusquedaV";
             this.txtBusquedaV.Size = new System.Drawing.Size(156, 20);
             this.txtBusquedaV.TabIndex = 15;
+            this.txtBusquedaV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusquedaV_KeyPress);
             // 
             // button2
             // 
@@ -184,6 +193,16 @@
             this.lblultima.TabIndex = 25;
             this.lblultima.Text = "label4";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // errorProvider2
+            // 
+            this.errorProvider2.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider2.ContainerControl = this;
+            // 
             // Ventas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,6 +224,8 @@
             this.Text = "Ventas";
             this.Load += new System.EventHandler(this.Ventas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Ventas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,5 +242,7 @@
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.Label lblfact;
         private System.Windows.Forms.Label lblultima;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider2;
     }
 }

@@ -71,5 +71,12 @@ namespace Sistema_ManejoInventario_
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
         }
+
+        private void BtnMaximizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            btnNormal.Visible = true;
+            BtnMaximizar.Visible = false;
+        }
     }
 }

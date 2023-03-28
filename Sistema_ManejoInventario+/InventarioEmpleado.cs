@@ -37,12 +37,14 @@ namespace Sistema_ManejoInventario_
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 cbo_filtro.Focus();
                 cbo_filtro.DroppedDown = true;
+                errorProvider2.SetError(cbo_filtro, "Escoja un Filtro de Busqueda");
             }
             else if(txt_busqueda.Text == String.Empty)
             {
                 MessageBox.Show("Escriba algo para realizar la busqueda correctamente", "Error de busqueda",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txt_busqueda.Focus();
+                txt_busqueda.Focus(); 
+                errorProvider1.SetError(txt_busqueda, "Este Campo es Obligatorio");
             }
             else
             {
@@ -56,6 +58,8 @@ namespace Sistema_ManejoInventario_
                 }
                 dgv_inventarios.DataSource = Busqueda_Inventario(filtro);
                 txt_busqueda.Focus();
+                errorProvider1.Clear();
+                errorProvider2.Clear();
             }
         }
 
@@ -95,7 +99,8 @@ namespace Sistema_ManejoInventario_
 
         private void cbo_filtro_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            errorProvider2.Clear();
+            txt_busqueda.Clear();
         }
 
         private void btn_limpiar_Click(object sender, EventArgs e)
@@ -103,6 +108,23 @@ namespace Sistema_ManejoInventario_
             dgv_inventarios.DataSource = Llenar_Inventario();
             txt_busqueda.Clear();
             cbo_filtro.SelectedIndex = -1;
+        }
+
+        private void txt_busqueda_KeyPress(object sender, KeyPressEventArgs e)
+        {
+       
+            if(cbo_filtro.Text == "Codigo")
+            {
+                if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+
         }
     }
 }

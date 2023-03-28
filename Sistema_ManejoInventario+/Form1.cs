@@ -22,44 +22,62 @@ namespace Sistema_ManejoInventario_
 
         Conexion conexion = new Conexion();
         SqlCommand cmd;
+
         private void bunifuFlatButton1_Click(object sender, EventArgs e)
         {
-            conexion.abrir();
-            string consulta = "select * from Usuarios where Nombre='" + txtUsuario.Text + "'and Contrasena='" + TxtContraseña.Text + "'";
-            SqlCommand comando = new SqlCommand(consulta, conexion.conectardb);
-            SqlDataReader lector;
-            lector = comando.ExecuteReader();
 
-            if (lector.HasRows == true)
+            if(txtUsuario.Text == String.Empty)
             {
-                conexion.cerrar();
-                conexion.abrir();
-                cmd = new SqlCommand(consulta, conexion.conectardb);
-                SqlDataAdapter user = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
-                user.Fill(dt);
-
-                if (dt.Rows.Count == 1)
-                {
-                    if (dt.Rows[0][0].ToString() == "1")
-                    {
-                        conexion.Codigo = 1;
-                    }
-
-                    MenuPrincipal menu = new MenuPrincipal();
-                    menu.Show();
-                    this.Hide();
-                }
+                MessageBox.Show("Ingrese un Nombre de Usuario", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                errorProvider1.SetError(txtUsuario, "Campo Obligatorio");
+            }
+            else if(TxtContraseña.Text == String.Empty)
+            {
+                MessageBox.Show("Ingrese una Contrasena", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                errorProvider1.SetError(TxtContraseña, "Campo Obligatorio");
             }
             else
             {
+                conexion.abrir();
+                string consulta = "select * from Usuarios where Nombre='" + txtUsuario.Text + "'and Contrasena='" + TxtContraseña.Text + "'";
+                SqlCommand comando = new SqlCommand(consulta, conexion.conectardb);
+                SqlDataReader lector;
+                lector = comando.ExecuteReader();
+
+                if (lector.HasRows == true)
+                {
+                    conexion.cerrar();
+                    conexion.abrir();
+                    cmd = new SqlCommand(consulta, conexion.conectardb);
+                    SqlDataAdapter user = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+
+                    user.Fill(dt);
+
+                    if (dt.Rows.Count == 1)
+                    {
+                        if (dt.Rows[0][0].ToString() == "1")
+                        {
+                            conexion.Codigo = 1;
+                        }
+
+                        MenuPrincipal menu = new MenuPrincipal();
+                        menu.Show();
+                        this.Hide();
+                    }
+                }
+                else
+                {
                     MessageBox.Show("Usuario o contraseña incorrecto.");
                     txtUsuario.Text = "";
                     TxtContraseña.Text = "";
                     txtUsuario.Focus();
+                    errorProvider1.Clear();
+                    errorProvider2.Clear();
+                }
+                conexion.cerrar();
+
             }
-            conexion.cerrar();
         }
 
 

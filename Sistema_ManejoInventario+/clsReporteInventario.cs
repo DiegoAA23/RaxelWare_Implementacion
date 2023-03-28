@@ -27,13 +27,13 @@ namespace Sistema_ManejoInventario_
                 data.Columns[0].HeaderCell.Value = "Codigo";
                 data.Columns[1].Width = 250;
                 data.Columns[1].HeaderCell.Value = "Nombre";
-                data.Columns[2].Width = 60;
+                data.Columns[2].Width = 50;
                 data.Columns[2].HeaderCell.Value = "Stock";
-                data.Columns[3].Width = 200;
+                data.Columns[3].Width = 170;
                 data.Columns[3].HeaderCell.Value = "Precio De Compra";
-                data.Columns[4].Width = 200;
+                data.Columns[4].Width = 170;
                 data.Columns[4].HeaderCell.Value = "Precio De Venta";
-                data.Columns[5].Width = 65;
+                data.Columns[5].Width = 100;
                 data.Columns[5].HeaderCell.Value = "Distribuidor";
             }
             catch (Exception)

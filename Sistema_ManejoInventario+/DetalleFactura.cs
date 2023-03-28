@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Sistema_ManejoInventario_
 {
@@ -69,8 +72,10 @@ namespace Sistema_ManejoInventario_
 
         private void DetalleFactura_Load(object sender, EventArgs e)
         {
+            dtp_fecha.MaxDate = DateTime.Now;
             conexion.abrir();
-
+            lblDNI.Hide();
+            lblRTN.Hide();
             try
             {
                 cmd = new SqlCommand("Select * from Producto_Factura", conexion.conectardb);
@@ -203,24 +208,53 @@ namespace Sistema_ManejoInventario_
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             try
             {
                 conexion.abrir();
 
-                if (cbxProductos == null || txtCantidad.Text == String.Empty)
+                if (cbxProductos.SelectedIndex == -1 || txtCantidad.Text == String.Empty)
                 {
+                    if(cbxProductos.SelectedIndex == -1)
+                    {
+                        errorProvider2.SetError(cbxProductos, "Elija un Producto");
+                    }
+
+                    if(txtCantidad.Text == String.Empty)
+                    {
+                        errorProvider2.SetError(txtCantidad, "Escriba una cantidad");
+                    }
+
                     MessageBox.Show("No se puede ingresar datos en blanco", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    dgv_agregados.Rows.Add();
-                    string cantidad = txtCantidad.Text;
-                    dgv_agregados.Rows[j].Cells[0].Value = nombre;
-                    dgv_agregados.Rows[j].Cells[1].Value = precio;
-                    dgv_agregados.Rows[j].Cells[2].Value = Convert.ToInt32(cantidad);
-                    j++;
+                    int filas = dgv_agregados.Rows.Count;
+                    int comp = 0;
+
+                    for (int x = 0; x < filas; x++)
+                    {
+                        if(nombre == dgv_agregados.Rows[x].Cells[0].Value.ToString())
+                        {
+                            comp = 1;
+                            break;
+                        }
+                    }
+
+                    if(comp == 1)
+                    {
+                        MessageBox.Show("El Producto ya Esta Agregado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        dgv_agregados.Rows.Add();
+                        string cantidad = txtCantidad.Text;
+                        dgv_agregados.Rows[j].Cells[0].Value = nombre;
+                        dgv_agregados.Rows[j].Cells[1].Value = precio;
+                        dgv_agregados.Rows[j].Cells[2].Value = Convert.ToInt32(cantidad);
+                        j++;
+                    }
                     txtCantidad.Clear();
+                    cbxProductos.SelectedIndex = -1;
                 }
             }
             catch (Exception ex)
@@ -239,17 +273,20 @@ namespace Sistema_ManejoInventario_
         {
             try
             {
-                conexion.abrir();
-                cmd = new SqlCommand("Select * from Productos", conexion.conectardb);
-
-                string consulta = "SELECT * from Productos Where Codigo = '" + (cbxProductos.SelectedItem as dynamic).Value + "'";
-                SqlCommand comando = new SqlCommand(consulta, conexion.conectardb);
-                SqlDataReader registro = comando.ExecuteReader();
-                while (registro.Read())
+                if(cbxProductos.SelectedIndex != -1)
                 {
-                    codigo = Convert.ToInt16((cbxProductos.SelectedItem as dynamic).Value);
-                    nombre = Convert.ToString((registro["Nombre"]));
-                    precio = Convert.ToString((registro["Precio de Venta"]));
+                    conexion.abrir();
+                    cmd = new SqlCommand("Select * from Productos", conexion.conectardb);
+
+                    string consulta = "SELECT * from Productos Where Codigo = '" + (cbxProductos.SelectedItem as dynamic).Value + "'";
+                    SqlCommand comando = new SqlCommand(consulta, conexion.conectardb);
+                    SqlDataReader registro = comando.ExecuteReader();
+                    while (registro.Read())
+                    {
+                        codigo = Convert.ToInt16((cbxProductos.SelectedItem as dynamic).Value);
+                        nombre = Convert.ToString((registro["Nombre"]));
+                        precio = Convert.ToString((registro["Precio de Venta"]));
+                    }
                 }
             }
             catch (Exception ex)
@@ -268,17 +305,34 @@ namespace Sistema_ManejoInventario_
 
             try
             {
-                if(txtDNI.Text == String.Empty || cbxPago == null || dtp_fecha.Value.ToString() == "")
+                if(txtDNI.Text == String.Empty || cbxPago.SelectedIndex == -1 || dtp_fecha.Value.ToString() == "" || txtRTN.TextLength < 14)
                 {
+                    if(txtDNI.Text == String.Empty)
+                    {
+                        errorProvider3.SetError(txtDNI,"Campo Obligatorio");
+                    }
+
+                    if(cbxPago.SelectedIndex == -1)
+                    {
+                        errorProvider4.SetError(cbxPago, "Campo Obligatorio");
+                    }
+
+                    if(txtRTN.Text != String.Empty && txtRTN.TextLength < 14)
+                    {
+                        errorProvider7.SetError(txtRTN, "RTN No Valido");
+                    }
+
                     MessageBox.Show("No puede ingresar campos vacios","ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if(dgv_agregados.Rows.Count == 1) 
+                else if(dgv_agregados.Rows.Count == 0) 
                 {
                     MessageBox.Show("Debe ingresar productos en la factura", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    errorProvider1.SetError(dgv_agregados, "Debe Agregar Productos");
                 }
                 else
                 {
                     // PARA TABLA FACTURA
+                    errorProvider1.Clear();
                     conexion.abrir();
                     string fecha = dtp_fecha.Value.ToString("yyyy/MM/dd");
                     double subtotal = 0;
@@ -332,7 +386,7 @@ namespace Sistema_ManejoInventario_
                     for (int i = 0; i < filas; i++)
                     {
 
-                        if (dgv_agregados.Rows[i].Cells[0].Value != null && dgv_agregados.Rows[i].Cells[2].Value != null)
+                        if(dgv_agregados.Rows[i].Cells[0].Value != null && dgv_agregados.Rows[i].Cells[2].Value != null)
                         {
                             conexion.abrir();
                             producto = dgv_agregados.Rows[i].Cells[0].Value.ToString();
@@ -359,6 +413,8 @@ namespace Sistema_ManejoInventario_
                     }
 
                     MessageBox.Show("Datos ingresados con exito", "COMPLETADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int fact = Convert.ToInt32(factura);
+                    facturaimpresa(fact, subtotal, total, impuesto);
                     this.Close();
                 }
             }
@@ -366,6 +422,65 @@ namespace Sistema_ManejoInventario_
             {
                 MessageBox.Show("Error al insertar datos\n" + ex, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void facturaimpresa(int f, double s, double t, double i)
+        {
+            Clsfunciones.CreaTicket Ticket1 = new Clsfunciones.CreaTicket();
+
+            Ticket1.TextoIzquierda("****************************************");
+            Ticket1.TextoCentro("Empresa: Raxel Baterias & Mas");
+            Ticket1.TextoIzquierda("****************************************");
+            Ticket1.TextoIzquierda("");
+            Ticket1.TextoIzquierda("Dirección: Col. ABCD, calle 3318");
+            Ticket1.TextoIzquierda("Teléfono: 31823750/22348304");
+            Ticket1.TextoIzquierda("RTN: 1234567890");
+            Ticket1.TextoIzquierda("");
+            Ticket1.TextoCentro("Factura de Venta");
+            Ticket1.TextoIzquierda("No Fac: " + f.ToString());
+            Ticket1.TextoIzquierda("Fecha: " + DateTime.Now.ToShortDateString() + "  Hora:" + DateTime.Now.ToShortTimeString());
+            Ticket1.TextoIzquierda("");
+            Ticket1.TextoIzquierda("****Cliente****");
+            Ticket1.TextoIzquierda("DNI: " + txtDNI.Text.ToString());
+            Ticket1.TextoIzquierda("RTN: " + txtRTN.Text.ToString());
+            Clsfunciones.CreaTicket.LineasGuion();
+            Clsfunciones.CreaTicket.EncabezadoVenta();
+            Clsfunciones.CreaTicket.LineasGuion();
+
+            string producto;
+            double preciop;
+            int cantidadp;
+            double subt;
+            
+            foreach (DataGridViewRow p in dgv_agregados.Rows)
+            {
+                // Articulo                     //Precio                                    cantidad                       
+                /*Ticket1.AgregaArticulo(p.Cells[0].Value.ToString(), Convert.ToDouble(p.Cells[1].Value.ToString()), Convert.ToInt16(p.Cells[2].Value.ToString()));
+                Debug.WriteLine(p.Cells[0].Value.ToString());
+                Debug.WriteLine(Convert.ToDouble(p.Cells[1].Value.ToString()));
+                Debug.WriteLine(Convert.ToInt16(p.Cells[2].Value.ToString()));*/
+                producto = p.Cells[0].Value.ToString();
+                preciop = Convert.ToDouble(p.Cells[1].Value.ToString());
+                cantidadp = Convert.ToInt16(p.Cells[2].Value.ToString());
+                subt = cantidadp * preciop;
+                Ticket1.AgregaArticulo(producto, preciop, cantidadp, subt);
+                /*Debug.WriteLine(producto);
+                Debug.WriteLine(preciop);
+                Debug.WriteLine(cantidadp);*/
+            }
+
+            Clsfunciones.CreaTicket.LineasGuion();
+            Ticket1.TextoIzquierda(" ");
+            Ticket1.AgregaTotales("Sub-total a pagar:", double.Parse(s.ToString()));
+            Ticket1.AgregaTotales("ISV calculado a pagar:", double.Parse(i.ToString()));
+            Ticket1.AgregaTotales("Total neto a pagar:", double.Parse(t.ToString()));
+            Ticket1.TextoIzquierda(" ");
+            Ticket1.TextoIzquierda("========================================");
+            Ticket1.TextoIzquierda("*       Gracias por preferirnos      *");
+            Ticket1.TextoIzquierda("========================================");
+            Ticket1.TextoIzquierda(" ");
+            string impresora = "Microsoft XPS Document Writer";
+            Ticket1.ImprimirTiket(impresora);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -378,11 +493,134 @@ namespace Sistema_ManejoInventario_
             if (dgv_agregados.SelectedRows.Count > 0)
             {
                 dgv_agregados.Rows.RemoveAt(dgv_agregados.SelectedRows[0].Index);
+                j--;
             }
             else
             {
                 MessageBox.Show("Seleccionar un codigo para eliminar", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void txtnumerof_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DetalleFactura_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void txtDNI_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int longitud = txtDNI.Text.Length;
+
+            if (longitud >= 13)
+            {
+                if (e.KeyChar != 8)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+        }
+
+        private void txtRTN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int longitud = txtRTN.Text.Length;
+
+            if (longitud >= 14)
+            {
+                if (e.KeyChar != 8)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+        }
+
+        private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void txtDNI_TextChanged(object sender, EventArgs e)
+        {
+            Regexp(@"^[0-1]{1}[0-9]{1}[0-1]{1}[0-9]{1}(19|20)\d{2}[0-9]{5}$",txtDNI, pictureBox1, lblDNI, "DNI");
+        }
+
+        public void Regexp(string re, System.Windows.Forms.TextBox tb, PictureBox pc, Label lbl, string s)
+        {
+            Regex regex = new Regex(re);
+
+            if (regex.IsMatch(tb.Text))
+            {
+                lbl.ForeColor = Color.Green;
+                lbl.Text = s + " Valido";
+                lbl.Hide();
+                pictureBox1.Hide();
+            }
+            else
+            {
+                pc.Image = Properties.Resources.invalido;
+                lblDNI.Show();
+                lbl.ForeColor = Color.Red;
+                lbl.Text = s + " Invalido";
+            }
+        }
+
+        private void txtRTN_TextChanged(object sender, EventArgs e)
+        {
+            Regexp2(@"^[0-1]{1}[0-9]{1}[0-1]{1}[0-9]{1}(19|20)\d{2}[0-9]{6}$", txtRTN, pictureBox2, lblRTN, "RTN");
+        }
+
+        public void Regexp2(string re, System.Windows.Forms.TextBox tb, PictureBox pc, Label lbl, string s)
+        {
+            Regex regex = new Regex(re);
+
+            if (regex.IsMatch(tb.Text))
+            {
+                lbl.ForeColor = Color.Green;
+                lbl.Text = s + " Valido";
+                lbl.Hide();
+                pictureBox2.Hide();
+            }
+            else
+            {
+                pc.Image = Properties.Resources.invalido;
+                lblRTN.Show();
+                lbl.ForeColor = Color.Red;
+                lbl.Text = s + " Invalido";
+            }
+        }
     }
+
 }
+

@@ -22,12 +22,14 @@ namespace Sistema_ManejoInventario_
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 data.DataSource = dt;
-                data.Columns[0].Width = 60;
-                data.Columns[0].HeaderCell.Value = "Codigo";
-                data.Columns[1].Width = 250;
-                data.Columns[1].HeaderCell.Value = "Fecha";
-                data.Columns[2].Width = 60;
-                data.Columns[2].HeaderCell.Value = "Total Ventas";
+               // data.Columns[0].Width = 60;
+               // data.Columns[0].HeaderCell.Value = "Codigo";
+                data.Columns[0].Width = 250;
+                data.Columns[0].HeaderCell.Value = "Fecha";
+                data.Columns[1].Width = 100;
+                data.Columns[1].HeaderCell.Value = "Total Ventas";
+                data.Columns[2].Width = 150;
+                data.Columns[2].HeaderCell.Value = "Impuestos";
                 data.Columns[3].Width = 200;
                 data.Columns[3].HeaderCell.Value = "Ganancias Generadas";
 
@@ -53,12 +55,14 @@ namespace Sistema_ManejoInventario_
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 data.DataSource = dt;
-                data.Columns[0].Width = 60;
-                data.Columns[0].HeaderCell.Value = "Codigo";
-                data.Columns[1].Width = 250;
-                data.Columns[1].HeaderCell.Value = "Fecha";
-                data.Columns[2].Width = 60;
-                data.Columns[2].HeaderCell.Value = "Total Ventas";
+                //data.Columns[0].Width = 60;
+                //data.Columns[0].HeaderCell.Value = "Codigo";
+                data.Columns[0].Width = 200;
+                data.Columns[0].HeaderCell.Value = "Fecha";
+                data.Columns[1].Width = 100;
+                data.Columns[1].HeaderCell.Value = "Total Ventas";
+                data.Columns[2].Width = 150;
+                data.Columns[2].HeaderCell.Value = "Impuestos";
                 data.Columns[3].Width = 200;
                 data.Columns[3].HeaderCell.Value = "Ganancias Generadas";
 

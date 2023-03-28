@@ -60,11 +60,12 @@ namespace Sistema_ManejoInventario_
 
         private void button7_Click(object sender, EventArgs e)
         {
+            errorProvider2.Clear();
             if (txtBusquedaV.Text == String.Empty)
             {
-                MessageBox.Show("Ingrese un codigo para realizar la busqueda correctamente", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ingrese un codigo para realizar la busqueda correctamente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtBusquedaV.Focus();
+                errorProvider1.SetError(txtBusquedaV,"Campo Obligatorio");
             }
             else
             {
@@ -79,7 +80,22 @@ namespace Sistema_ManejoInventario_
                 conexion.cerrar();
 
                 dgv_Ventas.DataSource = tabla_ventas;
+                errorProvider1.Clear();
             }
+
+            if (dgv_Ventas.Rows.Count == 0)
+            {
+                MessageBox.Show("La busqueda no encotro resultados.", "BUSQUEDA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                conexion.abrir();
+                dgv_Ventas.DataSource = llenarVentas();
+                conexion.cerrar();
+                txtBusquedaV.Clear();
+            }
+            txtBusquedaV.Focus();
+            errorProvider1.Clear();
+            errorProvider2.Clear();
+            button2.Enabled = true;
+            button3.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -100,9 +116,9 @@ namespace Sistema_ManejoInventario_
         {
             DetalleFactura df = new DetalleFactura();
             df.Show();
-            df.FormClosing += new FormClosingEventHandler(this.DetalleFactura_FormClosing);
-                  
+            df.FormClosing += new FormClosingEventHandler(this.DetalleFactura_FormClosing);  
         }
+
         private void DetalleFactura_FormClosing(object sender, FormClosingEventArgs e)
         {
             txtBusquedaV.Clear();
@@ -132,6 +148,7 @@ namespace Sistema_ManejoInventario_
 
         private void button2_Click_1(object sender, EventArgs e)
         {
+            errorProvider1.Clear();
             conexion.abrir();
             try
             {
@@ -161,11 +178,13 @@ namespace Sistema_ManejoInventario_
 
                         MessageBox.Show("Registro eliminado con exito", "COMPLETADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         dgv_Ventas.DataSource = llenarVentas();
+                        errorProvider2.Clear();
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No ha ingresado un codigo de factura", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No ha escogido una factura", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    errorProvider2.SetError(dgv_Ventas, "Debe Seleccionar un Registro Para Eliminar");
                 }
             }
             catch (Exception ex)
@@ -184,6 +203,19 @@ namespace Sistema_ManejoInventario_
 
             txtBusquedaV.Text = dgv_Ventas.CurrentRow.Cells[0].Value.ToString();
             txtBusquedaV.Enabled = false;
+        }
+
+        private void txtBusquedaV_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+
         }
     }
 }
