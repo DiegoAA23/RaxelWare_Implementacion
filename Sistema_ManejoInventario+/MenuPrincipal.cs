@@ -14,6 +14,7 @@ namespace Sistema_ManejoInventario_
 {
     public partial class MenuPrincipal : Form
     {
+        //Instancias de conexion a la BD
         Conexion conexion = new Conexion();
         SqlCommand cmd;
         public MenuPrincipal()
@@ -37,6 +38,8 @@ namespace Sistema_ManejoInventario_
             
         }
 
+        /*Funcion que define los elementos visibles en pantalla
+         dependiendo del nivel de usuario que ha ingresado al sistema*/
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
             AbrirFormHijo(new VentanaMenuPrincipal());
@@ -49,6 +52,8 @@ namespace Sistema_ManejoInventario_
             
         }
 
+        /*Funciones que permiten el control de las ventanas, para que el usuario pueda 
+        moverlas libremente*/
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
@@ -73,6 +78,9 @@ namespace Sistema_ManejoInventario_
         {
             Application.Exit();
         }
+
+        /*Funcion que permite redimensionar los formularios dentro del panel del
+        menu dependiendo de la opcion seleccionada*/
         private void AbrirFormHijo(object formhijo)
         {
             if (this.PanelCentro.Controls.Count > 0)
@@ -94,9 +102,6 @@ namespace Sistema_ManejoInventario_
             {
                 AbrirFormHijo(new InventarioEmpleado());
             }
-            
-           
-
         }
 
         private void PanelContenedor_Paint(object sender, PaintEventArgs e)
@@ -104,6 +109,7 @@ namespace Sistema_ManejoInventario_
             
         }
 
+        /*Apertura de los formularios dependiendo de la opcion seleccionada*/
         private void BtnVentas_Click(object sender, EventArgs e)
         {
             AbrirFormHijo(new Ventas());
@@ -136,9 +142,9 @@ namespace Sistema_ManejoInventario_
             BtnMaximizar.Visible = true;
         }
 
+        //Permite el movimiento libre del formulario
         private void BarraTop_MouseDown(object sender, MouseEventArgs e)
         {
-            
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }

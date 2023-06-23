@@ -11,19 +11,21 @@ namespace Sistema_ManejoInventario_
 {
     internal class clsReporteVentas
     {
+        //Instancia de conexion a la BD
         Conexion conexion = new Conexion();
+
         public void MostrarInventarioVentas(DataGridView data)
         {
             try
             {
+                //Llamado a un Proceso Almacenado en la BD
                 SqlDataAdapter da = new SqlDataAdapter("SP_ReporteVentas1", conexion.conectardb);
 
+                //Creacion de las columnas de la tabla, con los valores del Proceso Almacenado
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 data.DataSource = dt;
-               // data.Columns[0].Width = 60;
-               // data.Columns[0].HeaderCell.Value = "Codigo";
                 data.Columns[0].Width = 250;
                 data.Columns[0].HeaderCell.Value = "Fecha";
                 data.Columns[1].Width = 100;
@@ -48,15 +50,15 @@ namespace Sistema_ManejoInventario_
         {
             try
             {
+                //Llamado a un Proceso Almacenado en la BD
                 SqlDataAdapter da = new SqlDataAdapter("SP_FiltroReporteVentas", conexion.conectardb);
 
+                //Enviar parametros al Proceso Almacenado
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.SelectCommand.Parameters.Add("@fecha", SqlDbType.Date).Value = fecha;
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 data.DataSource = dt;
-                //data.Columns[0].Width = 60;
-                //data.Columns[0].HeaderCell.Value = "Codigo";
                 data.Columns[0].Width = 200;
                 data.Columns[0].HeaderCell.Value = "Fecha";
                 data.Columns[1].Width = 100;

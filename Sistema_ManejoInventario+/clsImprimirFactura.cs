@@ -12,6 +12,7 @@ namespace Sistema_ManejoInventario_
     {
         public class CreaTicket
         {
+            //Objeto al que se van a concatenar todos los valores para imprimir
             public static StringBuilder line = new StringBuilder();
             string ticket = "";
             string parte1, parte2;
@@ -25,11 +26,13 @@ namespace Sistema_ManejoInventario_
                 return line.AppendLine(LineaGuion).ToString();
             }
 
+            //Encabezado del apartado de productos en la factura
             public static void EncabezadoVenta()
             {
-                string LineEncavesado = "Producto         Cant    P.Unit    Valor";
+                string LineEncavesado = "Producto           Cant      P.Unit      Valor";
                 line.AppendLine(LineEncavesado);
             }
+
             public void TextoIzquierda(string par1)
             {
                 max = par1.Length;
@@ -103,6 +106,8 @@ namespace Sistema_ManejoInventario_
                 line.AppendLine(ticket += parte2 + "\n");
 
             }
+
+            //Agregado de los totales en la factura
             public void AgregaTotales(string par1, double total)
             {
                 max = par1.Length;
@@ -123,6 +128,8 @@ namespace Sistema_ManejoInventario_
 
             }
 
+            /*Agregado de los productos a la factura, agregando los espacios necesarios
+            para su separacion y organizacion*/
             public void AgregaArticulo(string Articulo, double precio, int cant, double subtotal)
             {
                 Debug.WriteLine(Articulo);
@@ -236,7 +243,9 @@ namespace Sistema_ManejoInventario_
             }
         }
 
-        #region API para enviar a impresora texto plano
+        #region Enviar a Impresora
+
+        //Envio de toda la factura al proceso de exportacion e impresion
         public class RawPrinterHelper
         {
 
@@ -318,4 +327,5 @@ namespace Sistema_ManejoInventario_
         }
         #endregion
     }
+
 }

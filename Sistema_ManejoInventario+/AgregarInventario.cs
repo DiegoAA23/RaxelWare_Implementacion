@@ -21,6 +21,7 @@ namespace Sistema_ManejoInventario_
             InitializeComponent();
         }
 
+        //Instancias de conexion a la BD y objetos para manejar la informacion
         Conexion conexion = new Conexion();
         SqlDataAdapter data_adapter;
         DataTable tabla_inventario;
@@ -28,6 +29,8 @@ namespace Sistema_ManejoInventario_
 
         private const int SombraForm = 0x20000;
 
+        /*Funciones que agregan una sombra al formulario, para resaltarlo mejor en
+         pantalla*/
         protected override CreateParams CreateParams
         {
             get
@@ -38,6 +41,8 @@ namespace Sistema_ManejoInventario_
             }
         }
 
+        /*Funciones que permiten el control de las ventanas, para que el usuario pueda 
+         moverlas libremente*/
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         [DllImportAttribute("user32.dll")]
@@ -62,9 +67,12 @@ namespace Sistema_ManejoInventario_
             BtnMaximizar.Visible = true;
         }
 
+        /*Funcion donde se cargan todos los datos al abrir el formulario, 
+         para los combobox y el datetimepicker*/
         private void AgregarInventario_Load(object sender, EventArgs e)
         {
             dtpFechaCompra.MaxDate = DateTime.Now;
+            dtpFechaCompra.Value = DateTime.Today;
             conexion.abrir();
 
             try
@@ -113,6 +121,7 @@ namespace Sistema_ManejoInventario_
             }
         }
 
+        //Permite el movimiento libre del formulario
         private void BarraTop_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
@@ -133,13 +142,73 @@ namespace Sistema_ManejoInventario_
         {
             try
             {
-                if (txtNombre.Text == String.Empty || txtPrecioVenta.Text == String.Empty || txtStock.Text == String.Empty || txtPrecioCompra.Text == String.Empty || txtPuntoOrden.Text == String.Empty || dtpFechaCompra == null || cmbCategoria == null || cmbDistribuidor == null)
+                validarForm();
+                //Validaciones para evitar campos vacios o invalidos
+                if (txtNombre.Text == String.Empty || txtNombre.TextLength < 5 || txtPrecioVenta.Text == String.Empty || txtStock.Text == String.Empty || txtPrecioCompra.Text == String.Empty || txtPuntoOrden.Text == String.Empty || dtpFechaCompra == null || cmbCategoria.SelectedIndex == -1 || cmbDistribuidor.SelectedIndex == -1)
                 {
-                    MessageBox.Show("No se pueden ingresar campos vacios", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (txtNombre.TextLength > 0 && txtNombre.TextLength < 5)
+                    {
+                        MessageBox.Show("El Nombre del Producto es muy Corto", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (txtNombre.Text == String.Empty || txtPrecioVenta.Text == String.Empty || txtStock.Text == String.Empty || txtPrecioCompra.Text == String.Empty || txtPuntoOrden.Text == String.Empty || dtpFechaCompra == null || cmbCategoria.SelectedIndex == -1 || cmbDistribuidor.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("No se Pueden Ingresar Vampos Vacíos", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     validarForm();
+                }
+                else if (txtNombre.TextLength <= 5)
+                {
+                    errorProvider1.SetError(txtNombre, "Nombre Muy Corto");
+                }
+                else if (Convert.ToDouble(txtPrecioCompra.Text) < 1 || Convert.ToDouble(txtPrecioVenta.Text) < 1 || Convert.ToInt16(txtPuntoOrden.Text) < 1 || Convert.ToInt16(txtStock.Text) < 1)
+                {
+
+                    if (Convert.ToDouble(txtPrecioCompra.Text) < 1)
+                    {
+                        errorProvider3.SetError(txtPrecioCompra, "Precio Invalido");
+                    }
+
+                    if (Convert.ToDouble(txtPrecioVenta.Text) < 1)
+                    {
+                        errorProvider2.SetError(txtPrecioVenta, "Precio Invalido");
+                    }
+
+                    if (Convert.ToDouble(txtPrecioCompra.Text) < 1 || Convert.ToDouble(txtPrecioVenta.Text) < 1)
+                    {
+                        MessageBox.Show("El Precio No Puede Ser 0", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if(Convert.ToInt16(txtPuntoOrden.Text) < 1)
+                    {
+                        errorProvider4.SetError(txtPuntoOrden, "Cantidad Invalida");
+                        MessageBox.Show("El Punto de Reorden No Puede Ser 0", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (Convert.ToInt16(txtStock.Text) < 1)
+                    {
+                        errorProvider8.SetError(txtStock, "Cantidad Invalida");
+                        MessageBox.Show("El Stock No Puede Ser 0", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }else if(Convert.ToDouble(txtPrecioCompra.Text) >= Convert.ToDouble(txtPrecioVenta.Text) || Convert.ToInt16(txtStock.Text) <= Convert.ToInt16(txtPuntoOrden.Text))
+                {
+                    if (Convert.ToDouble(txtPrecioCompra.Text) >= Convert.ToDouble(txtPrecioVenta.Text))
+                    {
+                        errorProvider3.SetError(txtPrecioCompra, "Precio Invalido");
+                        MessageBox.Show("El Precio de Compra No Puede Ser Mayor o Igual al Precio de Venta", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (Convert.ToInt16(txtPuntoOrden.Text) >= Convert.ToInt16(txtStock.Text))
+                    {
+                        errorProvider4.SetError(txtPuntoOrden, "Cantidad Invalida");
+                        MessageBox.Show("El Punto de Reorden No Puede Ser Mayor o Igual al Stock Comprado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                        
                 }
                 else
                 {
+                    //Proceso de adaptar los datos para la BD
                     conexion.abrir();
                     string fecha = dtpFechaCompra.Value.ToString("yyyy/MM/dd");
                     string nombre = txtNombre.Text.ToString();
@@ -149,10 +218,11 @@ namespace Sistema_ManejoInventario_
                     int puntore = Convert.ToInt16(txtPuntoOrden.Text.ToString());
                     bool estado = true;
 
+                    //Proceso de insertar los datos en la BD
                     cmd = new SqlCommand("Insert into Productos Values('" + nombre + "', '" + stock + "', '" + precioventa + "', '" + preciocompra + "', '" + fecha + "', '" + puntore + "', '" + (cmbCategoria.SelectedItem as dynamic).Value + "', '" + (cmbDistribuidor.SelectedItem as dynamic).Value + "', '" + estado + "')", conexion.conectardb);
                     cmd.ExecuteNonQuery();
                     conexion.cerrar();
-                    MessageBox.Show("Registros agregados con exito", "COMPLETADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Registros agregados con éxito", "COMPLETADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
             }
@@ -162,11 +232,17 @@ namespace Sistema_ManejoInventario_
             }
         }
 
+        /*Funcion que contiene todos los errorprovider del formulario
+         para verificar constantemente a medida se hacen cambios */
         private void validarForm()
         {
             if (txtNombre.Text == String.Empty)
             {
                 errorProvider1.SetError(txtNombre, "Campo Obligatorio");
+            }
+            else if(txtNombre.TextLength <= 5)
+            {
+                errorProvider1.SetError(txtNombre, "Nombre Muy Corto");
             }
             else
             {
@@ -225,6 +301,10 @@ namespace Sistema_ManejoInventario_
             {
                 errorProvider7.SetError(cmbDistribuidor, "Campo Obligatorio");
             }
+            else
+            {
+                errorProvider7.Clear();
+            }
 
             if (txtStock.Text == String.Empty)
             {
@@ -236,9 +316,9 @@ namespace Sistema_ManejoInventario_
             }
         }
 
+        //Validacion del Stock, para solo permitir numeros
         private void txtStock_KeyPress(object sender, KeyPressEventArgs e)
         {
-            validarForm();
             if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
             {
                 e.Handled = true;  
@@ -249,9 +329,9 @@ namespace Sistema_ManejoInventario_
             }
         }
 
+        //Validacion del Punto de Reorden, para solo permitir numeros
         private void txtPuntoOrden_KeyPress(object sender, KeyPressEventArgs e)
         {
-            validarForm();
             if ((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >= 58 && e.KeyChar <= 255))
             {
                 e.Handled = true;
@@ -263,9 +343,9 @@ namespace Sistema_ManejoInventario_
 
         }
 
+        //Validacion del Precio, para solo permitir numeros y un unico punto decimal
         private void txtPrecioCompra_KeyPress(object sender, KeyPressEventArgs e)
         {
-            validarForm();
             if (((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != 46))
             {
                 e.Handled = true;
@@ -281,9 +361,9 @@ namespace Sistema_ManejoInventario_
 
         }
 
+        //Validacion del Precio, para solo permitir numeros y un unico punto decimal
         private void txtPrecioVenta_KeyPress(object sender, KeyPressEventArgs e)
         {
-            validarForm();
             if (((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != 46))
             {
                 e.Handled = true;
@@ -301,12 +381,12 @@ namespace Sistema_ManejoInventario_
 
         private void dtpFechaCompra_ValueChanged(object sender, EventArgs e)
         {
-            validarForm();
+
         }
 
+        //Validacion de la longitud del Nombre
         private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
-            validarForm();
             int longitud = txtNombre.Text.Length;
 
             if (longitud == 25)
@@ -315,6 +395,21 @@ namespace Sistema_ManejoInventario_
 
                 return;
             }
+
+            if(longitud > 5)
+            {
+                errorProvider1.Clear();
+            }
+        }
+
+        private void cmbDistribuidor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrecioCompra_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

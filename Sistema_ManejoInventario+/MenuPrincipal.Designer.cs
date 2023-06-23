@@ -191,7 +191,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(177, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Raxel Baterias y Más";
+            this.label1.Text = "Raxel Baterías y Más";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // BtnMenuPrincipal
@@ -210,7 +210,7 @@
             this.BtnMenuPrincipal.Name = "BtnMenuPrincipal";
             this.BtnMenuPrincipal.Size = new System.Drawing.Size(213, 59);
             this.BtnMenuPrincipal.TabIndex = 5;
-            this.BtnMenuPrincipal.Text = "Menu Principal";
+            this.BtnMenuPrincipal.Text = "Menú Principal";
             this.BtnMenuPrincipal.UseVisualStyleBackColor = false;
             this.BtnMenuPrincipal.Click += new System.EventHandler(this.BtnMenuPrincipal_Click);
             // 

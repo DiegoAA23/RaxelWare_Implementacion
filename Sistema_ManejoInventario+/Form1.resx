@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+    <value>90</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -183,7 +183,7 @@
   <data name="BtnCerrar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAEEMSURBVHhe7Z0L
+        vQAADr0BR/uQrQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAEEMSURBVHhe7Z0L
         uB1VfeghQFREQERFQBS0+Iil6DHZM7NP7PGFvKXUg4ggIcAh2WvWSVK49Gq1HmtFUaut1dZePr3XXluv
         VGpvtV6t9qIWb/182xqtRo2YZM+aOUl4XLlSEfZda5+lhn3+Ia+9Z9bM/v2+7/clLeac/8xa8//PYz0O
         AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -467,7 +467,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAHOKSURBVHhe7d0H
+        vQAADr0BR/uQrQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAHOKSURBVHhe7d0H
         nFx1vf7xn4hSxIJYsHtt1/LXexX1qlevXS9XUVroRUUDSO8gxaWXQBppm4R0CAQQpCtKpLck2LAhkt1N
         NttnZmc3ZUvO//vM+e3uyewzYTc5M3tm5nler89rk6gRZs6Z98zuFKdpWhlsefAm99Cmj7nf9X7VLd90
         oHuo50duec+p9mcX2e8nuIc21trXZfb7B+zrE+63m1ZYL0ZaY3W43wzWZwWDPbipx//5UL/e9C/rBWuF

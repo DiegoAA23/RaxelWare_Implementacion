@@ -41,6 +41,10 @@
             this.dtp_fecha = new System.Windows.Forms.DateTimePicker();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BarraTop = new System.Windows.Forms.Panel();
+            this.btnNormal = new System.Windows.Forms.PictureBox();
+            this.BtnMinimizar = new System.Windows.Forms.PictureBox();
+            this.BtnMaximizar = new System.Windows.Forms.PictureBox();
+            this.BtnCerrar = new System.Windows.Forms.PictureBox();
             this.dgv_agregados = new System.Windows.Forms.DataGridView();
             this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,7 +53,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtCantidad = new System.Windows.Forms.TextBox();
-            this.cbxProductos = new System.Windows.Forms.ComboBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider3 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -60,16 +63,19 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.btnNormal = new System.Windows.Forms.PictureBox();
-            this.BtnMinimizar = new System.Windows.Forms.PictureBox();
-            this.BtnMaximizar = new System.Windows.Forms.PictureBox();
-            this.BtnCerrar = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblRTN = new System.Windows.Forms.Label();
             this.errorProvider7 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lblStock = new System.Windows.Forms.Label();
+            this.lblNumero = new System.Windows.Forms.Label();
+            this.txtProducto = new System.Windows.Forms.TextBox();
             this.BarraTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnNormal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMaximizar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_agregados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
@@ -78,10 +84,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnNormal)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnMaximizar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).BeginInit();
             this.SuspendLayout();
@@ -142,7 +144,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 16);
             this.label5.TabIndex = 23;
-            this.label5.Text = "Metodo de Pago: ";
+            this.label5.Text = "Método de Pago: ";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // txtDNI
@@ -150,6 +152,7 @@
             this.txtDNI.Location = new System.Drawing.Point(76, 251);
             this.txtDNI.Margin = new System.Windows.Forms.Padding(4);
             this.txtDNI.Name = "txtDNI";
+            this.txtDNI.ShortcutsEnabled = false;
             this.txtDNI.Size = new System.Drawing.Size(116, 21);
             this.txtDNI.TabIndex = 26;
             this.txtDNI.TextChanged += new System.EventHandler(this.txtDNI_TextChanged);
@@ -160,6 +163,7 @@
             this.txtRTN.Location = new System.Drawing.Point(76, 305);
             this.txtRTN.Margin = new System.Windows.Forms.Padding(4);
             this.txtRTN.Name = "txtRTN";
+            this.txtRTN.ShortcutsEnabled = false;
             this.txtRTN.Size = new System.Drawing.Size(116, 21);
             this.txtRTN.TabIndex = 27;
             this.txtRTN.TextChanged += new System.EventHandler(this.txtRTN_TextChanged);
@@ -173,6 +177,7 @@
             this.cbxPago.Name = "cbxPago";
             this.cbxPago.Size = new System.Drawing.Size(151, 24);
             this.cbxPago.TabIndex = 25;
+            this.cbxPago.SelectedIndexChanged += new System.EventHandler(this.cbxPago_SelectedIndexChanged);
             // 
             // dtp_fecha
             // 
@@ -196,6 +201,54 @@
             this.BarraTop.Paint += new System.Windows.Forms.PaintEventHandler(this.BarraTop_Paint);
             this.BarraTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BarraTop_MouseDown);
             this.BarraTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BarraTop_MouseMove);
+            // 
+            // btnNormal
+            // 
+            this.btnNormal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNormal.Image = ((System.Drawing.Image)(resources.GetObject("btnNormal.Image")));
+            this.btnNormal.Location = new System.Drawing.Point(978, 3);
+            this.btnNormal.Name = "btnNormal";
+            this.btnNormal.Size = new System.Drawing.Size(25, 25);
+            this.btnNormal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnNormal.TabIndex = 3;
+            this.btnNormal.TabStop = false;
+            this.btnNormal.Click += new System.EventHandler(this.btnNormal_Click_1);
+            // 
+            // BtnMinimizar
+            // 
+            this.BtnMinimizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnMinimizar.Image = ((System.Drawing.Image)(resources.GetObject("BtnMinimizar.Image")));
+            this.BtnMinimizar.Location = new System.Drawing.Point(941, 6);
+            this.BtnMinimizar.Name = "BtnMinimizar";
+            this.BtnMinimizar.Size = new System.Drawing.Size(25, 25);
+            this.BtnMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BtnMinimizar.TabIndex = 2;
+            this.BtnMinimizar.TabStop = false;
+            this.BtnMinimizar.Click += new System.EventHandler(this.BtnMinimizar_Click_1);
+            // 
+            // BtnMaximizar
+            // 
+            this.BtnMaximizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnMaximizar.Image = ((System.Drawing.Image)(resources.GetObject("BtnMaximizar.Image")));
+            this.BtnMaximizar.Location = new System.Drawing.Point(978, 3);
+            this.BtnMaximizar.Name = "BtnMaximizar";
+            this.BtnMaximizar.Size = new System.Drawing.Size(25, 25);
+            this.BtnMaximizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BtnMaximizar.TabIndex = 1;
+            this.BtnMaximizar.TabStop = false;
+            this.BtnMaximizar.Click += new System.EventHandler(this.BtnMaximizar_Click_1);
+            // 
+            // BtnCerrar
+            // 
+            this.BtnCerrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("BtnCerrar.Image")));
+            this.BtnCerrar.Location = new System.Drawing.Point(1014, 3);
+            this.BtnCerrar.Name = "BtnCerrar";
+            this.BtnCerrar.Size = new System.Drawing.Size(25, 25);
+            this.BtnCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BtnCerrar.TabIndex = 0;
+            this.BtnCerrar.TabStop = false;
+            this.BtnCerrar.Click += new System.EventHandler(this.BtnCerrar_Click_1);
             // 
             // dgv_agregados
             // 
@@ -255,7 +308,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(330, 206);
+            this.label9.Location = new System.Drawing.Point(330, 252);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(67, 16);
@@ -264,22 +317,13 @@
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(400, 203);
+            this.txtCantidad.Location = new System.Drawing.Point(400, 249);
             this.txtCantidad.Margin = new System.Windows.Forms.Padding(4);
             this.txtCantidad.Name = "txtCantidad";
+            this.txtCantidad.ShortcutsEnabled = false;
             this.txtCantidad.Size = new System.Drawing.Size(116, 21);
             this.txtCantidad.TabIndex = 29;
             this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
-            // 
-            // cbxProductos
-            // 
-            this.cbxProductos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxProductos.FormattingEnabled = true;
-            this.cbxProductos.Location = new System.Drawing.Point(400, 153);
-            this.cbxProductos.Name = "cbxProductos";
-            this.cbxProductos.Size = new System.Drawing.Size(181, 24);
-            this.cbxProductos.TabIndex = 28;
-            this.cbxProductos.SelectedIndexChanged += new System.EventHandler(this.cbxProductos_SelectedIndexChanged);
             // 
             // errorProvider1
             // 
@@ -356,53 +400,6 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // btnNormal
-            // 
-            this.btnNormal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNormal.Image = ((System.Drawing.Image)(resources.GetObject("btnNormal.Image")));
-            this.btnNormal.Location = new System.Drawing.Point(978, 3);
-            this.btnNormal.Name = "btnNormal";
-            this.btnNormal.Size = new System.Drawing.Size(25, 25);
-            this.btnNormal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnNormal.TabIndex = 3;
-            this.btnNormal.TabStop = false;
-            this.btnNormal.Click += new System.EventHandler(this.btnNormal_Click_1);
-            // 
-            // BtnMinimizar
-            // 
-            this.BtnMinimizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnMinimizar.Image = ((System.Drawing.Image)(resources.GetObject("BtnMinimizar.Image")));
-            this.BtnMinimizar.Location = new System.Drawing.Point(941, 3);
-            this.BtnMinimizar.Name = "BtnMinimizar";
-            this.BtnMinimizar.Size = new System.Drawing.Size(25, 25);
-            this.BtnMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BtnMinimizar.TabIndex = 2;
-            this.BtnMinimizar.TabStop = false;
-            this.BtnMinimizar.Click += new System.EventHandler(this.BtnMinimizar_Click_1);
-            // 
-            // BtnMaximizar
-            // 
-            this.BtnMaximizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnMaximizar.Image = ((System.Drawing.Image)(resources.GetObject("BtnMaximizar.Image")));
-            this.BtnMaximizar.Location = new System.Drawing.Point(978, 3);
-            this.BtnMaximizar.Name = "BtnMaximizar";
-            this.BtnMaximizar.Size = new System.Drawing.Size(25, 25);
-            this.BtnMaximizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BtnMaximizar.TabIndex = 1;
-            this.BtnMaximizar.TabStop = false;
-            // 
-            // BtnCerrar
-            // 
-            this.BtnCerrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("BtnCerrar.Image")));
-            this.BtnCerrar.Location = new System.Drawing.Point(1014, 3);
-            this.BtnCerrar.Name = "BtnCerrar";
-            this.BtnCerrar.Size = new System.Drawing.Size(25, 25);
-            this.BtnCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BtnCerrar.TabIndex = 0;
-            this.BtnCerrar.TabStop = false;
-            this.BtnCerrar.Click += new System.EventHandler(this.BtnCerrar_Click_1);
-            // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.Silver;
@@ -453,6 +450,37 @@
             // 
             this.errorProvider7.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider7.ContainerControl = this;
+            this.errorProvider7.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider7.Icon")));
+            // 
+            // lblStock
+            // 
+            this.lblStock.AutoSize = true;
+            this.lblStock.Location = new System.Drawing.Point(330, 203);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(100, 16);
+            this.lblStock.TabIndex = 41;
+            this.lblStock.Text = "Stock Disponible: ";
+            this.lblStock.Click += new System.EventHandler(this.lblStock_Click);
+            // 
+            // lblNumero
+            // 
+            this.lblNumero.AutoSize = true;
+            this.lblNumero.Location = new System.Drawing.Point(25, 74);
+            this.lblNumero.Name = "lblNumero";
+            this.lblNumero.Size = new System.Drawing.Size(94, 16);
+            this.lblNumero.TabIndex = 42;
+            this.lblNumero.Text = "No. de Factura: ";
+            // 
+            // txtProducto
+            // 
+            this.txtProducto.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtProducto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtProducto.Location = new System.Drawing.Point(400, 153);
+            this.txtProducto.Name = "txtProducto";
+            this.txtProducto.ShortcutsEnabled = false;
+            this.txtProducto.Size = new System.Drawing.Size(181, 21);
+            this.txtProducto.TabIndex = 28;
+            this.txtProducto.TextChanged += new System.EventHandler(this.txtProducto_TextChanged);
             // 
             // DetalleFactura
             // 
@@ -461,13 +489,15 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1055, 489);
+            this.Controls.Add(this.txtProducto);
+            this.Controls.Add(this.lblNumero);
+            this.Controls.Add(this.lblStock);
             this.Controls.Add(this.lblRTN);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.lblDNI);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.cbxProductos);
             this.Controls.Add(this.txtCantidad);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -494,6 +524,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DetalleFactura_FormClosing);
             this.Load += new System.EventHandler(this.DetalleFactura_Load);
             this.BarraTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnNormal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnMaximizar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_agregados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
@@ -502,10 +536,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnNormal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnMinimizar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnMaximizar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BtnCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider7)).EndInit();
             this.ResumeLayout(false);
@@ -539,7 +569,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtCantidad;
-        private System.Windows.Forms.ComboBox cbxProductos;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ErrorProvider errorProvider1;
@@ -553,5 +582,8 @@
         private System.Windows.Forms.Label lblRTN;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ErrorProvider errorProvider7;
+        private System.Windows.Forms.Label lblStock;
+        private System.Windows.Forms.Label lblNumero;
+        private System.Windows.Forms.TextBox txtProducto;
     }
 }

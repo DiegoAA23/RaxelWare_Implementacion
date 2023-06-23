@@ -11,14 +11,17 @@ namespace Sistema_ManejoInventario_
 {
     internal class clsReporteInventario
     {
+        //Instancia de conexion a la BD
         Conexion cone = new Conexion();
 
         public void MostrarInventario(DataGridView data)
         {
             try
             {
+                //Llamado a un Proceso Almacenado en la BD
                 SqlDataAdapter da = new SqlDataAdapter("SP_reporteInventario", cone.conectardb);
 
+                //Creacion de las columnas de la tabla, con los valores del Proceso Almacenado
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -50,6 +53,7 @@ namespace Sistema_ManejoInventario_
         {
             try
             {
+                //Enviar parametros al Proceso Almacenado
                 cone.abrir();
                 SqlCommand sql = new SqlCommand("filtro_busqueda", cone.conectardb);
                 sql.CommandType = CommandType.StoredProcedure;

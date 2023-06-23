@@ -66,6 +66,7 @@
             // 
             this.txt_busqueda.Location = new System.Drawing.Point(135, 136);
             this.txt_busqueda.Name = "txt_busqueda";
+            this.txt_busqueda.ShortcutsEnabled = false;
             this.txt_busqueda.Size = new System.Drawing.Size(577, 20);
             this.txt_busqueda.TabIndex = 4;
             this.txt_busqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_busqueda_KeyPress);
@@ -144,7 +145,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 17);
             this.label2.TabIndex = 50;
-            this.label2.Text = "Busqueda: ";
+            this.label2.Text = "Búsqueda: ";
             // 
             // label3
             // 

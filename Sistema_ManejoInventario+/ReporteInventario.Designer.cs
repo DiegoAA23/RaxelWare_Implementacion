@@ -54,8 +54,9 @@
             // 
             // txtBusq
             // 
-            this.txtBusq.Location = new System.Drawing.Point(450, 63);
+            this.txtBusq.Location = new System.Drawing.Point(502, 63);
             this.txtBusq.Name = "txtBusq";
+            this.txtBusq.ShortcutsEnabled = false;
             this.txtBusq.Size = new System.Drawing.Size(187, 20);
             this.txtBusq.TabIndex = 9;
             this.txtBusq.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusq_KeyPress);
@@ -160,11 +161,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(365, 64);
+            this.label2.Location = new System.Drawing.Point(349, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 17);
+            this.label2.Size = new System.Drawing.Size(147, 17);
             this.label2.TabIndex = 47;
-            this.label2.Text = "Busqueda: ";
+            this.label2.Text = "Código de Producto:";
             // 
             // button2
             // 

@@ -83,9 +83,29 @@ namespace Sistema_ManejoInventario_.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Boton_agregar {
+            get {
+                object obj = ResourceManager.GetObject("Boton agregar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_agregar_al_carrito {
             get {
                 object obj = ResourceManager.GetObject("boton agregar al carrito", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Boton_agregar_mini {
+            get {
+                object obj = ResourceManager.GetObject("Boton agregar mini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

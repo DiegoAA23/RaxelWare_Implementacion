@@ -266,5 +266,11 @@
   <ItemGroup>
     <None Include="Resources\invalido.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Boton agregar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Boton agregar mini.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

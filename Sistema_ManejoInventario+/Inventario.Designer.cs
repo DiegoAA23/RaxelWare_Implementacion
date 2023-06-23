@@ -45,6 +45,8 @@
             this.btnActualizar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.errorProvider4 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbxEstado = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
@@ -56,7 +58,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(742, 105);
+            this.label3.Location = new System.Drawing.Point(473, 106);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 17);
             this.label3.TabIndex = 47;
@@ -70,7 +72,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 17);
             this.label2.TabIndex = 46;
-            this.label2.Text = "Busqueda: ";
+            this.label2.Text = "Búsqueda: ";
             // 
             // cbxFiltro
             // 
@@ -80,9 +82,9 @@
             "Codigo",
             "Nombre",
             "Categoria"});
-            this.cbxFiltro.Location = new System.Drawing.Point(794, 103);
+            this.cbxFiltro.Location = new System.Drawing.Point(525, 104);
             this.cbxFiltro.Name = "cbxFiltro";
-            this.cbxFiltro.Size = new System.Drawing.Size(221, 21);
+            this.cbxFiltro.Size = new System.Drawing.Size(143, 21);
             this.cbxFiltro.TabIndex = 37;
             this.cbxFiltro.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -103,13 +105,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(970, 321);
             this.dataGridView1.TabIndex = 32;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick_1);
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged_1);
             // 
             // txtBusqueda
             // 
             this.txtBusqueda.Location = new System.Drawing.Point(127, 104);
             this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(490, 20);
+            this.txtBusqueda.ShortcutsEnabled = false;
+            this.txtBusqueda.Size = new System.Drawing.Size(320, 20);
             this.txtBusqueda.TabIndex = 31;
             this.txtBusqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusqueda_KeyPress);
             // 
@@ -171,7 +175,7 @@
             this.btnAgregar.ForeColor = System.Drawing.Color.Black;
             this.btnAgregar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregar.Image")));
             this.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAgregar.Location = new System.Drawing.Point(45, 489);
+            this.btnAgregar.Location = new System.Drawing.Point(481, 489);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(187, 41);
             this.btnAgregar.TabIndex = 36;
@@ -191,7 +195,7 @@
             this.btnEliminar.ForeColor = System.Drawing.Color.Black;
             this.btnEliminar.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Image")));
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEliminar.Location = new System.Drawing.Point(259, 489);
+            this.btnEliminar.Location = new System.Drawing.Point(260, 489);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(187, 41);
             this.btnEliminar.TabIndex = 35;
@@ -231,7 +235,7 @@
             this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(479, 489);
+            this.button1.Location = new System.Drawing.Point(45, 489);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(187, 41);
             this.button1.TabIndex = 33;
@@ -244,12 +248,37 @@
             this.errorProvider4.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider4.ContainerControl = this;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            this.label4.Location = new System.Drawing.Point(830, 104);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 17);
+            this.label4.TabIndex = 50;
+            this.label4.Text = "Estado:";
+            // 
+            // cbxEstado
+            // 
+            this.cbxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxEstado.FormattingEnabled = true;
+            this.cbxEstado.Items.AddRange(new object[] {
+            "Habilitados",
+            "Deshabilitados"});
+            this.cbxEstado.Location = new System.Drawing.Point(892, 103);
+            this.cbxEstado.Name = "cbxEstado";
+            this.cbxEstado.Size = new System.Drawing.Size(121, 21);
+            this.cbxEstado.TabIndex = 49;
+            this.cbxEstado.SelectedIndexChanged += new System.EventHandler(this.cbxEstado_SelectedIndexChanged);
+            // 
             // Inventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1092, 576);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cbxEstado);
             this.Controls.Add(this.btn_limpiar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -292,5 +321,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider2;
         private System.Windows.Forms.ErrorProvider errorProvider3;
         private System.Windows.Forms.ErrorProvider errorProvider4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbxEstado;
     }
 }
